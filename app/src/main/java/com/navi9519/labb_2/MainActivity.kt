@@ -60,10 +60,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.navi9519.labb_2.destinations.AboutScreenDestination
+import com.navi9519.labb_2.destinations.HomeScreenDestination
+import com.navi9519.labb_2.destinations.LoggedInScreenDestination
+import com.navi9519.labb_2.destinations.SignInScreenDestination
 import com.navi9519.labb_2.ui.theme.Labb_2Theme
-
-
-
+import com.ramcosta.composedestinations.DestinationsNavHost
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.annotation.RootNavGraph
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 
 class MainActivity : ComponentActivity() {
@@ -76,10 +81,15 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    DestinationsNavHost(
+                        navGraph = NavGraphs.root
+                        // withStyledAttributes(ProfileTransitions::class) // TODO - ProfileTransitions
+                    )
+
                    // SignInScreen()
                     //HomeScreen()
                     //AboutScreen()
-                    LoggedInScreen()
+                   // LoggedInScreen()
                 }
             }
         }
@@ -88,10 +98,11 @@ class MainActivity : ComponentActivity() {
 
 
 ////// HOME SCREEN COMPONENTS //////
-
+@RootNavGraph(start = true)
+@Destination
 @Composable
-@Preview(showBackground = true)
-fun HomeScreen() {
+//@Preview(showBackground = true)
+fun HomeScreen(navigator: DestinationsNavigator) {
 
     Column(
         modifier = Modifier
@@ -135,7 +146,9 @@ ImageComponent(img = R.drawable.home_4)
 
         )
 
-        Btn("About Page")
+        Btn("About Page") {
+            navigator.navigate(AboutScreenDestination)
+        }
     }
 
 
@@ -144,10 +157,10 @@ ImageComponent(img = R.drawable.home_4)
 
 
 /////// ABOUT SCREEN COMPONENTS ///////
-
+@Destination
 @Composable
-@Preview(showBackground = true)
-fun AboutScreen() {
+//@Preview(showBackground = true)
+fun AboutScreen(navigator: DestinationsNavigator) {
 
     Column(
         modifier = Modifier
@@ -190,7 +203,9 @@ fun AboutScreen() {
 
         )
 
-        Btn("Sign in Page")
+        Btn("Sign in Page") {
+            navigator.navigate(SignInScreenDestination)
+        }
     }
 
 
@@ -198,10 +213,10 @@ fun AboutScreen() {
 
 
 ////// SIGN IN SCREEN COMPONENTS //////
-
+@Destination
 @Composable
-@Preview(showBackground = true)
-fun SignInScreen() {
+//@Preview(showBackground = true)
+fun SignInScreen(navigator: DestinationsNavigator) {
 
 
 Box(modifier = Modifier.fillMaxSize()) {
@@ -222,9 +237,11 @@ Box(modifier = Modifier.fillMaxSize()) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         SignInTitle()
-        SignInInputField(label = "Name", icon = "person")
-        SignInInputField(label = "Password", icon = "lock")
-        Btn("Login")
+        SignInInputField(input = "Name", icon = "person")
+        SignInInputField(input = "Password", icon = "lock")
+        Btn("Login") {
+            navigator.navigate(LoggedInScreenDestination)
+        }
 
     }
 
@@ -250,7 +267,7 @@ fun SignInTitle() {
 }
 
 @Composable
-fun SignInInputField(label: String, icon: String) {
+fun SignInInputField(input: String, icon: String) {
 
 
    val (text, setText) = remember { mutableStateOf(TextFieldValue("")) }
@@ -291,7 +308,7 @@ fun SignInInputField(label: String, icon: String) {
         },
         label = {
             Text(
-                text = label,
+                text = input,
             ) },
 
 
@@ -320,10 +337,10 @@ private fun getLoginIcon(iconName: String): ImageVector {
 
 
 /////// Logged In Screen COMPONENTS ///////
-
+@Destination
 @Composable
-@Preview(showBackground = true)
-fun LoggedInScreen(/*userName: String */) {
+//@Preview(showBackground = true)
+fun LoggedInScreen(navigator: DestinationsNavigator) {
 
     Column(
 
@@ -384,7 +401,9 @@ fun LoggedInScreen(/*userName: String */) {
         )
         ImageLoggedInComponent(img = R.drawable.loggedin_3 )
 
-        Btn(text = "Go Back to Home")
+        Btn(text = "Go Back to Home") {
+            navigator.navigate(HomeScreenDestination)
+        }
     }
 
 
@@ -394,8 +413,8 @@ fun LoggedInScreen(/*userName: String */) {
 
 // Reusable button components for all screens
 @Composable
-fun Btn(text: String) {
-    Button(onClick = { /*TODO*/ },
+fun Btn(text: String, onclick: () -> Unit) {
+    Button(onClick = onclick,
         colors = ButtonDefaults.buttonColors(Color.Black),
         border = BorderStroke(1.dp, Color.Red),
         modifier = Modifier

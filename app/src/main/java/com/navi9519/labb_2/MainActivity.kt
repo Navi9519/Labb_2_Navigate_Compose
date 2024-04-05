@@ -61,9 +61,9 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.navi9519.labb_2.ui.theme.Labb_2Theme
-import com.ramcosta.composedestinations.DestinationsNavHost
-import com.ramcosta.composedestinations.annotation.RootNavGraph
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+
+
+
 
 
 class MainActivity : ComponentActivity() {
@@ -76,12 +76,10 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-
-                    DestinationsNavHost(navGraph = NavGraphs.root)
                    // SignInScreen()
                     //HomeScreen()
                     //AboutScreen()
-                   // LoggedInScreen()
+                    LoggedInScreen()
                 }
             }
         }
@@ -91,12 +89,9 @@ class MainActivity : ComponentActivity() {
 
 ////// HOME SCREEN COMPONENTS //////
 
-
-
 @Composable
-@RootNavGraph(start = true)
-//@Preview(showBackground = true)
-fun HomeScreen(navigator: DestinationsNavigator) {
+@Preview(showBackground = true)
+fun HomeScreen() {
 
     Column(
         modifier = Modifier

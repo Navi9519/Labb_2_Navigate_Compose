@@ -1,18 +1,24 @@
 package com.navi9519.labb_2
 
+import android.media.Image
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
@@ -22,6 +28,7 @@ import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -33,21 +40,30 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.navi9519.labb_2.ui.theme.Labb_2Theme
-
-
+import com.ramcosta.composedestinations.DestinationsNavHost
+import com.ramcosta.composedestinations.annotation.RootNavGraph
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 
 class MainActivity : ComponentActivity() {
@@ -60,7 +76,12 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    LoginPage()
+
+                    DestinationsNavHost(navGraph = NavGraphs.root)
+                   // SignInScreen()
+                    //HomeScreen()
+                    //AboutScreen()
+                   // LoggedInScreen()
                 }
             }
         }
@@ -68,19 +89,126 @@ class MainActivity : ComponentActivity() {
 }
 
 
-////// HOME PAGE COMPONENTS //////
+////// HOME SCREEN COMPONENTS //////
+
+
 
 @Composable
-fun HomePage() {
-    
+@RootNavGraph(start = true)
+//@Preview(showBackground = true)
+fun HomeScreen(navigator: DestinationsNavigator) {
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = Color.Black),
+         verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+
+ImageComponent(img = R.drawable.home_4)
+
+        Text(
+            text = "WELCOME TO THE STOCKOLM BJJ APP",
+            fontSize = 30.sp,
+            color = Color.Red,
+            fontFamily = FontFamily.SansSerif,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+            maxLines = 3,
+            style = LocalTextStyle.current.copy(lineHeight = 50.sp),
+            modifier = Modifier
+                .padding(vertical = 40.dp)
+
+
+
+
+        )
+        Text(
+            text = "FOR MORE INFO PRESS THE BUTTON BELOW",
+            fontSize = 30.sp,
+            color = Color.Red,
+            fontFamily = FontFamily.SansSerif,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+            maxLines = 3,
+            style = LocalTextStyle.current.copy(lineHeight = 50.sp),
+            modifier = Modifier
+                .padding(40.dp)
+
+
+
+        )
+
+        Btn("About Page")
+    }
+
+
 }
 
 
-////// LOGIN PAGE COMPONENTS //////
+
+/////// ABOUT SCREEN COMPONENTS ///////
 
 @Composable
 @Preview(showBackground = true)
-fun LoginPage() {
+fun AboutScreen() {
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = Color.Black),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+        ImageComponent(img = R.drawable.about_1)
+
+        Text(
+            text = "BJJ is one of the most central martial arts within MMA (Mixed Martial Arts)" +
+                    " and BJJ fighters from Sweden have also competed successfully in MMA.",
+            fontSize = 15.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color.Red,
+            fontFamily = FontFamily.SansSerif,
+            textAlign = TextAlign.Center,
+            maxLines = 3,
+            style = LocalTextStyle.current.copy(lineHeight = 50.sp),
+            modifier = Modifier
+                .padding(vertical = 40.dp)
+        )
+
+        ImageComponent(img = R.drawable.about_3)
+
+        Text(
+            text = "To Log in, press the button below ",
+            fontSize = 15.sp,
+            color = Color.Red,
+            fontFamily = FontFamily.SansSerif,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+            maxLines = 2,
+            style = LocalTextStyle.current.copy(lineHeight = 50.sp),
+            modifier = Modifier
+                .padding(40.dp)
+
+
+        )
+
+        Btn("Sign in Page")
+    }
+
+
+}
+
+
+////// SIGN IN SCREEN COMPONENTS //////
+
+@Composable
+@Preview(showBackground = true)
+fun SignInScreen() {
+
+
 Box(modifier = Modifier.fillMaxSize()) {
 
    Image(
@@ -98,68 +226,80 @@ Box(modifier = Modifier.fillMaxSize()) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        LoginTitle()
-        LoginInputField(label = "Name", icon = "person")
-        LoginInputField(label = "Password", icon = "lock")
-        LoginBtn()
+        SignInTitle()
+        SignInInputField(label = "Name", icon = "person")
+        SignInInputField(label = "Password", icon = "lock")
+        Btn("Login")
 
     }
 
 }
 }
 
+
 @Composable
-fun LoginTitle() {
+fun SignInTitle() {
   Text(text = "BJJ STOCKHOLM",
       fontSize = 40.sp,
+      fontWeight = FontWeight.Bold,
       color = Color.Red,
       fontFamily = FontFamily.Cursive,
       modifier = Modifier.padding(40.dp))
 
     Text(text = "Login", fontSize = 50.sp,
         color = Color.Red,
+        fontWeight = FontWeight.Bold,
         fontFamily = FontFamily.Cursive,
         modifier = Modifier.padding(40.dp))
     
 }
 
 @Composable
-fun LoginInputField(label: String, icon: String) {
+fun SignInInputField(label: String, icon: String) {
 
 
-    var text by remember { mutableStateOf(TextFieldValue("")) }
+   val (text, setText) = remember { mutableStateOf(TextFieldValue("")) }
 
     return OutlinedTextField(
         value = text,
         modifier = Modifier
-            .padding(horizontal = 40.dp, vertical = 40.dp)
+            .padding(vertical = 40.dp)
             .background(Color.Black, RoundedCornerShape(22.dp)),
-        shape = RoundedCornerShape(22.dp),
+        shape = RoundedCornerShape(22.dp)
+        ,
 
         colors = OutlinedTextFieldDefaults.colors(
             unfocusedTextColor = Color.Red,
             unfocusedBorderColor = Color.Red,
             unfocusedLabelColor = Color.Red,
             unfocusedLeadingIconColor = Color.Red,
+            focusedBorderColor = Color.Red,
+            focusedLabelColor = Color.Red,
 
 
         ),
+
+        textStyle = TextStyle(
+            Color.Red,
+            fontSize = 20.sp),
+
         leadingIcon = {
             Icon(
-                imageVector = getIcon(icon),
+                imageVector = getLoginIcon(icon),
                 contentDescription = "$icon Icon",
                 tint = Color.Red
             ) },
 
         onValueChange = {
-            text = it
+            setText(it)
 
         },
         label = {
             Text(
                 text = label,
-
             ) },
+
+
 
 
     )
@@ -168,7 +308,7 @@ fun LoginInputField(label: String, icon: String) {
 
 // Get Icon function for input field
 
-private fun getIcon(iconName: String): ImageVector {
+private fun getLoginIcon(iconName: String): ImageVector {
     return when (iconName) {
         "person" -> Icons.Default.Person
         "lock" -> Icons.Default.Lock
@@ -177,36 +317,138 @@ private fun getIcon(iconName: String): ImageVector {
 
 }
 
-@Composable
-fun LoginBtn() {
-    Button(onClick = { /*TODO*/ },
-        colors = ButtonDefaults.buttonColors(Color.DarkGray),
-        modifier = Modifier
-            .width(250.dp)
-            .padding(20.dp)
-    )  {
 
+
+
+
+
+
+
+/////// Logged In Screen COMPONENTS ///////
+
+@Composable
+@Preview(showBackground = true)
+fun LoggedInScreen(/*userName: String */) {
+
+    Column(
+
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = Color.Black),
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         Text(
-            text = "Login",
+            text = "Welcome NAME, here is the top 3 BJJ" +
+                    " clubs in Stockholm, press the pictures to get to each clubs website:",
+            fontSize = 15.sp,
+            fontWeight = FontWeight.Bold,
             color = Color.Red,
-            fontSize = 20.sp
+            fontFamily = FontFamily.SansSerif,
+            textAlign = TextAlign.Center,
+            maxLines = 3,
+            style = LocalTextStyle.current.copy(lineHeight = 30.sp),
+            modifier = Modifier
+                .padding(vertical = 15.dp)
 
         )
 
+        Text(
+            text = "Team Leites",
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color.Red,
+            fontFamily = FontFamily.Cursive,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .padding(vertical = 15.dp)
+        )
+        ImageLoggedInComponent(img = R.drawable.loggedin_1 )
+
+        Text(
+            text = "Prana Jiu-Jitsu",
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color.Red,
+            fontFamily = FontFamily.Cursive,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .padding(vertical = 15.dp)
+        )
+        ImageLoggedInComponent(img = R.drawable.loggedin_2 )
+
+        Text(
+            text = "Stark Jiu-Jitsu" ,
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color.Red,
+            fontFamily = FontFamily.Cursive,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .padding(vertical = 15.dp)
+        )
+        ImageLoggedInComponent(img = R.drawable.loggedin_3 )
+
+        Btn(text = "Go Back to Home")
+    }
+
+
+}
+
+
+
+// Reusable button components for all screens
+@Composable
+fun Btn(text: String) {
+    Button(onClick = { /*TODO*/ },
+        colors = ButtonDefaults.buttonColors(Color.Black),
+        border = BorderStroke(1.dp, Color.Red),
+        modifier = Modifier
+            .width(250.dp)
+            .padding(20.dp)
+
+    )  {
+
+        Text(
+            text = text,
+            color = Color.Red,
+            fontSize = 20.sp,
+
+            )
     }
 }
 
-/////// ABOUT PAGE COMPONENTS ///////
 
+// Reusable image component for all screens except LoggedIn
 @Composable
-fun AboutPage() {
+fun ImageComponent(img: Int) {
+    Image(
+        painter = painterResource(id = img),
+        contentDescription = "about images",
+        contentScale = ContentScale.Crop,
+        modifier = Modifier
+            .width(210.dp)
+            .height(210.dp)
+            .clip(CircleShape)
+            .border(0.5.dp, Color.Red, CircleShape)
+    )
 
+    
 }
 
-
-/////// LOGGED IN PAGE COMPONENTS ///////
-
+// Reusable image component for LoggedIn Screen
 @Composable
-fun LoggedInPage() {
+fun ImageLoggedInComponent(img: Int) {
+    Image(
+        painter = painterResource(id = img),
+        contentDescription = "about images",
+        contentScale = ContentScale.Crop,
+        modifier = Modifier
+            .width(160.dp)
+            .height(160.dp)
+            .clip(CircleShape)
+            .border(0.5.dp, Color.Red, CircleShape)
+    )
+
 
 }

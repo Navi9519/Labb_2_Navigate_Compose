@@ -1,8 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    // Annotation Processor NEW
-    id("com.google.devtools.ksp" )
+
 }
 
 android {
@@ -42,7 +41,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.11"
+        kotlinCompilerExtensionVersion = "1.5.1"
     }
     packaging {
         resources {
@@ -53,9 +52,7 @@ android {
 
 dependencies {
 
-    // https://mvnrepository.com/artifact/io.github.raamcosta.compose-destinations/core
-    implementation ("io.github.raamcosta.compose-destinations:core:1.10.2")
-    ksp("io.github.raamcosta.compose-destinations:ksp:1.10.2")
+
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")

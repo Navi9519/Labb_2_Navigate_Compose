@@ -38,7 +38,7 @@ fun LoggedInScreen(username: String, navigator: DestinationsNavigator) {
     ) {
         Text(
             text = "Welcome $username, here is the top 3 BJJ" +
-                    " clubs in Stockholm, press the pictures to get to each clubs website:",
+                    " clubs in Stockholm:",
             fontSize = 15.sp,
             fontWeight = FontWeight.Bold,
             color = Color.Red,

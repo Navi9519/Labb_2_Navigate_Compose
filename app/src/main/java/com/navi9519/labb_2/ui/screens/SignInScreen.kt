@@ -1,5 +1,6 @@
 package com.navi9519.labb_2.ui.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -24,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -41,10 +43,13 @@ import com.navi9519.labb_2.users
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
+
 @Destination
 @Composable
 fun SignInScreen(navigator: DestinationsNavigator) {
-
+    // Variable context needed to make Toast
+    val context = LocalContext.current
+    // Mutable textField states for username and password
     val usernameState = remember { mutableStateOf(TextFieldValue("")) }
     val passwordState= remember { mutableStateOf(TextFieldValue("")) }
 
@@ -84,22 +89,31 @@ fun SignInScreen(navigator: DestinationsNavigator) {
             )
             Btn("Login") {
 
+                val username = usernameState.value.text
+                val password = passwordState.value.text
 
-                // Add new User
-                val newUser = User(usernameState.value.text, passwordState.value.text)
 
-                // Update the userList state
-                users.add(usernameState.value.text to passwordState.value.text)
+           if(username.length >= 2 && password.length >= 6) {
+               // Add new User object
+               val newUser = User(username, password)
 
-                //  Navigating to login screen + sending username data to display ypu are logged in
-                val username = newUser.userName
+               // Update the userList state, with the new users
+               users.add(username to password)
 
-                for(user in users) {
-                    println(user)
-                }
+               //  Navigating to login screen + sending username data to display you are logged in
 
-                navigator.navigate(LoggedInScreenDestination(username))
-            }
+               navigator.navigate(LoggedInScreenDestination(username))
+
+               // Printing every user from list(users) to see if they get created and added to the list
+               for (user in users) {
+                   println(user)
+               }
+           } else {
+
+               Toast.makeText(context, "You have to put a valid name(min 2 chars) / password(min 6 chars)",
+                   Toast.LENGTH_LONG).show()
+
+           }   }
 
         }
 

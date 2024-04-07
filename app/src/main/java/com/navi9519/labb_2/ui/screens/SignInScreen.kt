@@ -94,6 +94,18 @@ fun SignInScreen(navigator: DestinationsNavigator) {
 
 
            if(username.length >= 2 && password.length >= 6) {
+
+
+               // Check if the username already exists
+               var userExists = false
+               for (user in users) {
+                   if (user.first == username) {
+                       userExists = true
+                       break
+                   }
+               }
+
+               if(!userExists) {
                // Add new User object
                val newUser = User(username, password)
 
@@ -107,6 +119,10 @@ fun SignInScreen(navigator: DestinationsNavigator) {
                // Printing every user from list(users) to see if they get created and added to the list
                for (user in users) {
                    println(user)
+               }
+               } else {
+                   Toast.makeText(context, "username ''$username'' already exists",
+                       Toast.LENGTH_LONG).show()
                }
            } else {
 

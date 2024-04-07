@@ -247,8 +247,7 @@ fun SignInScreen(navigator: DestinationsNavigator) {
                 visual = PasswordVisualTransformation())
             Btn("Login") {
 
-                println(usernameState.value.text)
-                println(passwordState.value.text)
+              
                 // Add new User
                 val newUser = User(usernameState.value.text, passwordState.value.text)
 

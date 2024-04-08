@@ -89,6 +89,7 @@ fun SignInScreen(navigator: DestinationsNavigator) {
             )
             Btn("Login") {
 
+                // Setting more easy readable variables for state changes
                 val username = usernameState.value.text
                 val password = passwordState.value.text
 
@@ -199,9 +200,10 @@ fun SignInInputField(
 
 
         },
+
         label = {
             Text(
-                text = label,
+               label,
             ) },
 
         visualTransformation = visual ?: VisualTransformation.None

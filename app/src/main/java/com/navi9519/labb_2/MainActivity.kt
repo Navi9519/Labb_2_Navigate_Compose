@@ -25,6 +25,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.navi9519.labb_2.ui.models.User
 import com.navi9519.labb_2.ui.screens.NavGraphs
 import com.navi9519.labb_2.ui.theme.Labb_2Theme
 import com.ramcosta.composedestinations.DestinationsNavHost
@@ -51,7 +52,7 @@ class MainActivity : ComponentActivity() {
 }
 
 // List of users added when signing/Logging in to a MutableList
-val users = mutableStateListOf<Pair<String, String>>()
+val users = mutableStateListOf<User>()
 
 
 //// Reusable composables over all  screens ////

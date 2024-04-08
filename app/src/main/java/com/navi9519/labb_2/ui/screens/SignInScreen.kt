@@ -99,7 +99,7 @@ fun SignInScreen(navigator: DestinationsNavigator) {
                // Check if the username already exists
                var userExists = false
                for (user in users) {
-                   if (user.first == username) {
+                   if (user.userName == username) {
                        userExists = true
                        break
                    }
@@ -110,7 +110,7 @@ fun SignInScreen(navigator: DestinationsNavigator) {
                val newUser = User(username, password)
 
                // Update the userList state, with the new users
-               users.add(username to password)
+               users.add(newUser)
 
                //  Navigating to login screen + sending username data to display you are logged in
 
@@ -126,7 +126,7 @@ fun SignInScreen(navigator: DestinationsNavigator) {
                }
            } else {
 
-               Toast.makeText(context, "You have to put a valid name(min 2 chars) / password(min 6 chars)",
+               Toast.makeText(context, "You have to put a valid name(min 2 chars) and password(min 6 chars)",
                    Toast.LENGTH_LONG).show()
 
            }   }

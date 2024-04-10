@@ -115,7 +115,9 @@ fun SignInScreen(navigator: DestinationsNavigator) {
 
                //  Navigating to login screen + sending username data to display you are logged in
 
-               navigator.navigate(LoggedInScreenDestination(username))
+               navigator.navigate(LoggedInScreenDestination(
+                 username = username
+               ))
 
                // Printing every user from list(users) to see if they get created and added to the list
                for (user in users) {
